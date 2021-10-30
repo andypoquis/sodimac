@@ -27,6 +27,12 @@ class VaucherDetailController extends GetxController {
     isSuccessFulDelivery.value = true;
   }
 
+  navigatorCameraRefused() {
+    Get.back();
+    Get.toNamed(Routes.CAMERA);
+    isSuccessFulDelivery.value = false;
+  }
+
   disableButton() {
     buttonRoleEnabled.value = false;
     stateRoleText.value = 'Recepción aprobada';

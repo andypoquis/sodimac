@@ -10,6 +10,51 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('GR-01-000000115'),
+        actions: [
+          Obx(() {
+            return (_controller.roleIndex == 3)
+                ? IconButton(
+                    onPressed: () {
+                      Get.bottomSheet(
+                          Container(
+                            height: _sizeScreen.height * 0.25,
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                const Text(
+                                  'Enviar guía al cliente',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Text('Correo Electronico'),
+                                const TextField(
+                                  obscureText: true,
+                                  // decoration: const InputDecoration(icon: Icon(Icons.lock)),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: _sizeScreen.width,
+                                  child: ElevatedButton(
+                                      onPressed: () {},
+                                      child: const Text('Enviar')),
+                                ),
+                              ],
+                            ),
+                          ),
+                          backgroundColor: Colors.white);
+                    },
+                    icon: Icon(Icons.send))
+                : Container();
+          })
+        ],
       ),
       body: SafeArea(
         child: Column(children: [
@@ -235,7 +280,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
               const Divider(),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () => _controller.navigatorCameraRefused(),
                   child: Row(
                     children: [
                       const Text(

@@ -25,7 +25,7 @@ class CameraPage extends GetView<CameraController> {
             child: Obx(() {
               return (_controller.isSuccessFulDelivery.value)
                   ? aprovedDelivery(sizeScreen)
-                  : Container();
+                  : refusedDelivery(sizeScreen);
             })),
       ),
     );
@@ -74,35 +74,61 @@ class CameraPage extends GetView<CameraController> {
   }
 
   Widget refusedDelivery(sizeScreen) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Text(
-          controller.expressionStateRefuse.value,
-          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Text(
-          controller.descriptonStateRefuse.value,
-          style: (const TextStyle(fontSize: 16)),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: 5,
-        ),
-        camera(sizeScreen),
-        (controller.isImageLoad.value)
-            ? Expanded(
-                child: Center(
-                  child: Container(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            controller.expressionStateRefuse.value,
+            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            controller.descriptonStateRefuse.value,
+            style: (const TextStyle(fontSize: 16)),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Text('Motivo'),
+          const SizedBox(
+            height: 10,
+          ),
+          DropdownButton(
+            isExpanded: true,
+            items: const [],
+            hint: const Text('Seleccione...'),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          const Text('Detalles adicionales'),
+          const SizedBox(
+            height: 10,
+          ),
+          const TextField(
+            decoration: InputDecoration(
+                hintMaxLines: 7,
+                fillColor: Colors.red,
+                hintText: 'Ingresa los dettalles aqui'),
+            keyboardType: TextInputType.multiline,
+            maxLines: 5,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          camera(sizeScreen),
+          const SizedBox(
+            height: 20,
+          ),
+          (controller.isImageLoad.value)
+              ? Center(
+                  child: SizedBox(
                     height: 40,
                     width: sizeScreen.width,
                     child: ElevatedButton(
@@ -112,17 +138,19 @@ class CameraPage extends GetView<CameraController> {
                         },
                         child: const Text('ENVIAR')),
                   ),
-                ),
-              )
-            : Container(),
-      ],
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 
   Widget camera(sizeScreen) {
-    return Container(
+    return SizedBox(
       width: sizeScreen.width,
-      height: sizeScreen.height * 0.45,
+      height: (_controller.isSuccessFulDelivery.value)
+          ? sizeScreen.height * 0.45
+          : sizeScreen.height * 0.25,
       child: Center(
         child: Obx(() => controller.selectedImagePath.value == ''
             ? const Text('Seleccione una imagen')

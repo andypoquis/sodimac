@@ -14,13 +14,15 @@ class CameraController extends GetxController {
   RxString expressionStateSuccess = '¡Genail!'.obs;
   RxString descriptonStateSuccess = ''.obs;
 
-  RxString expressionStateRefuse = '¡Genail!'.obs;
+  RxString expressionStateRefuse = '¡Oh no!'.obs;
   RxString descriptonStateRefuse = ''.obs;
 
   @override
   void onInit() {
     descriptonStateSuccess.value =
-        'La entrega se ha realizado sin inconvenientes, acontinuación sube una evidencia de la entrega.';
+        '${dataUser['name']}, envianos tu evidencia y daremos por finalizado esta entrega.';
+    descriptonStateRefuse.value =
+        '${dataUser['name']}!, Este incidente no debio ocurrir. Cuentanos. ¿Qué salió mal? y sube una evidencia.';
     super.onInit();
   }
 
@@ -34,9 +36,6 @@ class CameraController extends GetxController {
       //         'MB';
 
       isImageLoad.value = true;
-      expressionStateSuccess.value = '¡Gracias!';
-      descriptonStateSuccess.value =
-          '${dataUser['name']}, envianos tu evidencia y daremos por finalizado esta entrega.';
     } else {
       Get.snackbar('Error', 'No seleccionó una imagen',
           snackPosition: SnackPosition.BOTTOM,
