@@ -14,20 +14,26 @@ class AuthenticateController extends GetxController {
     {
       'email': 'usuario1',
       'pass': '1234',
-      'name': 'Andrés Enrique',
+      'name': 'Prevencionista',
       'type_user': 0,
     },
     {
       'email': 'usuario2',
       'pass': '1234',
-      'name': 'Thiago Jamil',
+      'name': 'Asesor de recepción',
       'type_user': 1,
     },
     {
       'email': 'usuario3',
       'pass': '1234',
-      'name': 'Thiago Jamil',
+      'name': 'Operador de transporte',
       'type_user': 2,
+    },
+    {
+      'email': 'usuario4',
+      'pass': '1234',
+      'name': 'Transportista',
+      'type_user': 3,
     },
   ];
 
