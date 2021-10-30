@@ -214,7 +214,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
               Expanded(
                 child: Container(
                   child: GestureDetector(
-                    onTap: () => _controller.navigatorCamera(),
+                    onTap: () => _controller.navigatorCameraSuccess(),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [

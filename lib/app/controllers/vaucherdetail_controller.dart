@@ -7,6 +7,7 @@ class VaucherDetailController extends GetxController {
   RxInt roleIndex = 0.obs;
   RxBool buttonRoleEnabled = true.obs;
   RxString stateRoleText = 'Pendiente de recepción'.obs;
+  RxBool isSuccessFulDelivery = false.obs;
   get dataUser => box.read("data_user");
 
   @override
@@ -20,9 +21,10 @@ class VaucherDetailController extends GetxController {
     super.onInit();
   }
 
-  navigatorCamera() {
+  navigatorCameraSuccess() {
     Get.back();
     Get.toNamed(Routes.CAMERA);
+    isSuccessFulDelivery.value = true;
   }
 
   disableButton() {
