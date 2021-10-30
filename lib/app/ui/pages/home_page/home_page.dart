@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sodimac/app/controllers/authenticate_controller.dart';
+import 'package:sodimac/app/ui/pages/carrierhomerol_page/carrierhomerol_page.dart';
 import 'package:sodimac/app/ui/pages/preventionistlist_page/preventionistlist_page.dart';
 import 'package:sodimac/app/ui/pages/receptionrolelist_page/receptionrolelist_page.dart';
 import 'package:sodimac/app/ui/pages/transportoperatorlist_page/transportoperatorlist_page.dart';
@@ -68,10 +69,15 @@ class HomePage extends GetView<HomeController> {
         return ReceptionRoleListPage();
       case 2:
         return TransportoperatorlistPage();
+      case 3:
+        return CarrierhomerolPage();
       default:
     }
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

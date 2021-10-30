@@ -19,25 +19,25 @@ class TransportoperatorlistPage
                 Get.bottomSheet(
                     Container(
                       height: screenSize.height * 0.25,
-                      padding: EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Enviar Excel de Guías',
                             style: TextStyle(
                                 fontSize: 22, fontWeight: FontWeight.bold),
                           ),
-                          Text('Correo Electronico'),
-                          TextField(
+                          const Text('Correo Electronico'),
+                          const TextField(
                             obscureText: true,
                             // decoration: const InputDecoration(icon: Icon(Icons.lock)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             width: screenSize.width,
                             child: ElevatedButton(
                                 onPressed: () {}, child: const Text('Enviar')),

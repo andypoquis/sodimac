@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:sodimac/app/bindings/authenticate_binding.dart';
+import 'package:sodimac/app/bindings/camera_binding.dart';
 import 'package:sodimac/app/bindings/home_binding.dart';
 import 'package:sodimac/app/bindings/login_binding.dart';
 import 'package:sodimac/app/bindings/vaucherdetail_binding.dart';
 import 'package:sodimac/app/ui/pages/authenticate_page/authenticate_page.dart';
+import 'package:sodimac/app/ui/pages/camera_page/camera_page.dart';
 import 'package:sodimac/app/ui/pages/home_page/home_page.dart';
 import 'package:sodimac/app/ui/pages/login_page/login_page.dart';
 import 'package:sodimac/app/ui/pages/splash_page/splash_page.dart';
@@ -34,6 +36,11 @@ abstract class AppPages {
       name: Routes.VAUCHER_DETAIL,
       page: () => VaucherDetailPage(),
       binding: VaucherDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.CAMERA,
+      page: () => CameraPage(),
+      binding: CameraBinding(),
     ),
   ];
 }

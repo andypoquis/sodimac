@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sodimac/app/routes/app_pages.dart';
 
 class VaucherDetailController extends GetxController {
   GetStorage box = GetStorage();
@@ -17,6 +18,11 @@ class VaucherDetailController extends GetxController {
 
     //print(roleIndex);
     super.onInit();
+  }
+
+  navigatorCamera() {
+    Get.back();
+    Get.toNamed(Routes.CAMERA);
   }
 
   disableButton() {

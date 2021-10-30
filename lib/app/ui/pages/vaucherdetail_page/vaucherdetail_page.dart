@@ -45,7 +45,8 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
         ));
   }
 
-  Widget buttonPass(final sizeScreen, BuildContext context, String title) {
+  Widget buttonPass(
+      final sizeScreen, BuildContext context, String title, int indexRole) {
     return Expanded(
         flex: 1,
         child: Column(
@@ -56,10 +57,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
               width: sizeScreen.width * 0.8,
               height: 50,
               child: ElevatedButton(
-                  onPressed: () {
-                    _controller.disableButton();
-                    menssagePass(context);
-                  },
+                  onPressed: () => onPressedOperation(indexRole, context),
                   child: Container(
                       padding: const EdgeInsets.all(10.0), child: Text(title))),
             ),
@@ -136,6 +134,129 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
     );
   }
 
+  Widget roleButton(final sizeScreen, BuildContext context) {
+    return Obx(() {
+      if (_controller.buttonRoleEnabled.value) {
+        switch (_controller.roleIndex.value) {
+          case 0:
+            return buttonPass(sizeScreen, context, 'APROBAR', 0);
+          case 1:
+            return buttonPass(sizeScreen, context, 'APROBAR RECEPCIÓN', 1);
+          case 3:
+            return buttonPass(sizeScreen, context, 'FINALIZAR ENTREGA', 3);
+        }
+      } else {
+        return Container();
+      }
+      return Container();
+    });
+  }
+
+  Widget stateRoleText() {
+    return Obx(() {
+      switch (_controller.roleIndex.value) {
+        case 0:
+          return descriptionWidget('Estado', 'Aprobado por SUNAT');
+        case 1:
+          return descriptionWidget(
+              'Estado', '${_controller.stateRoleText.value}');
+        case 2:
+          return Container();
+        case 3:
+          return descriptionWidget('Estado', 'Aprobado Home Delivery');
+        default:
+      }
+      return Container();
+    });
+  }
+
+  void onPressedOperation(int indexRole, BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    switch (indexRole) {
+      case 0:
+        _controller.disableButton();
+        menssagePass(context);
+        break;
+      case 1:
+        _controller.disableButton();
+        menssagePass(context);
+        break;
+      case 3:
+        carrierOptions(screenSize);
+
+        break;
+      default:
+    }
+  }
+
+  void carrierOptions(screenSize) {
+    Get.bottomSheet(
+        Container(
+          height: screenSize.height * 0.35,
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Finalizar Entrega',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                  'Por favor seleccione una opcción conforme haya ocurrido la entrega'),
+              const SizedBox(
+                height: 20,
+              ),
+              const Divider(),
+              Expanded(
+                child: Container(
+                  child: GestureDetector(
+                    onTap: () => _controller.navigatorCamera(),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Text(
+                          'ENTREGA EXITOSA',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        Expanded(child: Container()),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    children: [
+                      const Text(
+                        'LA ENTREGA NO SE CONCRETÓ',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      Expanded(child: Container()),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        backgroundColor: Colors.white);
+  }
+
   void menssagePass(BuildContext context) {
     showDialog(
         context: context,
@@ -154,35 +275,6 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
             content: const Text('Aprobación realizada con éxito'),
           );
         });
-  }
-
-  Widget roleButton(final sizeScreen, BuildContext context) {
-    return Obx(() {
-      if (_controller.buttonRoleEnabled.value) {
-        if (_controller.roleIndex.value == 0) {
-          return buttonPass(
-            sizeScreen,
-            context,
-            'APROBAR',
-          );
-        } else {
-          return buttonPass(sizeScreen, context, 'APROBAR RECEPCIÓN');
-        }
-      } else {
-        return Container();
-      }
-    });
-  }
-
-  Widget stateRoleText() {
-    return Obx(() {
-      if (_controller.roleIndex.value == 0) {
-        return descriptionWidget('Estado', 'Aprobado por SUNAT');
-      } else {
-        return descriptionWidget(
-            'Estado', '${_controller.stateRoleText.value}');
-      }
-    });
   }
 
   // Widget rowWidget(){
