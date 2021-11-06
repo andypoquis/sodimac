@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sodimac/app/controllers/camera_controller.dart';
+import 'package:sodimac/app/ui/pages/carriervalidatewidget_page/carriervalidatewidget_page.dart';
 import '../../../controllers/vaucherdetail_controller.dart';
 
 class VaucherDetailPage extends GetView<VaucherDetailController> {
   final _controller = Get.put(VaucherDetailController());
+  final _controller2 = Get.put(CameraController());
   @override
   Widget build(BuildContext context) {
     final _sizeScreen = MediaQuery.of(context).size;
@@ -12,7 +15,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
         title: const Text('GR-01-000000115'),
         actions: [
           Obx(() {
-            return (_controller.roleIndex == 3)
+            return (_controller.roleIndex.value == 3)
                 ? IconButton(
                     onPressed: () {
                       Get.bottomSheet(
@@ -34,7 +37,11 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
                                 ),
                                 const Text('Correo Electronico'),
                                 const TextField(
+                                  enabled: false,
                                   obscureText: true,
+                                  decoration: InputDecoration(
+                                      fillColor: Colors.red,
+                                      hintText: 'example@gmail.com'),
                                   // decoration: const InputDecoration(icon: Icon(Icons.lock)),
                                 ),
                                 const SizedBox(
@@ -51,7 +58,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
                           ),
                           backgroundColor: Colors.white);
                     },
-                    icon: Icon(Icons.send))
+                    icon: const Icon(Icons.send))
                 : Container();
           })
         ],
@@ -60,7 +67,12 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
         child: Column(children: [
           descriptionDetail(),
           tableWidget(),
-          roleButton(_sizeScreen, context)
+          roleButton(_sizeScreen, context),
+          Obx(() {
+            return (_controller.roleIndex.value == 3)
+                ? CarriervalidatewidgetPage()
+                : Container();
+          })
         ]),
       ),
     );

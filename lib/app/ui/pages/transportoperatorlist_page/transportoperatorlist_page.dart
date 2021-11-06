@@ -31,7 +31,11 @@ class TransportoperatorlistPage
                           ),
                           const Text('Correo Electronico'),
                           const TextField(
+                            enabled: false,
                             obscureText: true,
+                            decoration: InputDecoration(
+                                fillColor: Colors.red,
+                                hintText: 'example@gmail.com'),
                             // decoration: const InputDecoration(icon: Icon(Icons.lock)),
                           ),
                           const SizedBox(

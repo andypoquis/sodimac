@@ -11,6 +11,7 @@ class CameraPage extends GetView<CameraController> {
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
+
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
@@ -53,10 +54,10 @@ class CameraPage extends GetView<CameraController> {
           height: 20,
         ),
         camera(sizeScreen),
-        (controller.isImageLoad.value)
+        (controller.pathImage.isNotEmpty)
             ? Expanded(
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                     height: 40,
                     width: sizeScreen.width,
                     child: ElevatedButton(
@@ -119,14 +120,14 @@ class CameraPage extends GetView<CameraController> {
             keyboardType: TextInputType.multiline,
             maxLines: 5,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           camera(sizeScreen),
           const SizedBox(
             height: 20,
           ),
-          (controller.isImageLoad.value)
+          (controller.pathImage.isEmpty)
               ? Center(
                   child: SizedBox(
                     height: 40,
@@ -147,18 +148,56 @@ class CameraPage extends GetView<CameraController> {
 
   Widget camera(sizeScreen) {
     return SizedBox(
-      width: sizeScreen.width,
-      height: (_controller.isSuccessFulDelivery.value)
-          ? sizeScreen.height * 0.45
-          : sizeScreen.height * 0.25,
-      child: Center(
-        child: Obx(() => controller.selectedImagePath.value == ''
-            ? const Text('Seleccione una imagen')
-            : Image.file(
-                File(controller.selectedImagePath.value),
-                fit: BoxFit.contain,
-              )),
-      ),
-    );
+        width: sizeScreen.width,
+        height: (_controller.isSuccessFulDelivery.value)
+            ? sizeScreen.height * 0.45
+            : sizeScreen.height * 0.25,
+        child: Center(
+            child: Obx(() => controller.selectedImagePath.value == ''
+                    ? const Text('Seleccione una imagen')
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.pathImage.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              padding: const EdgeInsets.all(10),
+                              child: Stack(
+                                children: [
+                                  Image.file(
+                                    File(controller.pathImage[index]),
+                                    fit: BoxFit.contain,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Container(
+                                      margin: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.redAccent),
+                                      child: IconButton(
+                                        onPressed: () =>
+                                            controller.deleteImage(index),
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ));
+                        })
+                // GridView.builder(
+                //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //         crossAxisCount: 2),
+                //     itemCount: controller.pathImage.length,
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return Image.file(
+                //         File(controller.pathImage[index]),
+                //         fit: BoxFit.contain,
+                //       );
+                //     })),
+                )));
   }
 }

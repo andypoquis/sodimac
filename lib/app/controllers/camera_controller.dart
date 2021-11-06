@@ -10,6 +10,7 @@ class CameraController extends GetxController {
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
   RxBool isImageLoad = false.obs;
+  RxList pathImage = [].obs;
 
   RxString expressionStateSuccess = '¡Genail!'.obs;
   RxString descriptonStateSuccess = ''.obs;
@@ -18,12 +19,33 @@ class CameraController extends GetxController {
   RxString descriptonStateRefuse = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    await GetStorage.init('type_user');
     descriptonStateSuccess.value =
         '${dataUser['name']}, envianos tu evidencia y daremos por finalizado esta entrega.';
     descriptonStateRefuse.value =
         '${dataUser['name']}!, Este incidente no debio ocurrir. Cuentanos. ¿Qué salió mal? y sube una evidencia.';
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    box.remove('images_carrier');
+
+    super.onClose();
+  }
+
+  void deleteDataPaths() {
+    selectedImagePath.value = '';
+    pathImage = [].obs;
+  }
+
+  void deleteImage(index) {
+    pathImage.removeAt(index);
+  }
+
+  void onPressed() {
+    box.write("images_carrier", pathImage);
   }
 
   void getImage(ImageSource imageSource) async {
@@ -34,6 +56,8 @@ class CameraController extends GetxController {
       //     ((File(selectedImagePath.value))/1024 / 1024)
       //             .toStringAsFixed(2) +
       //         'MB';
+
+      pathImage.add(selectedImagePath.value);
 
       isImageLoad.value = true;
     } else {

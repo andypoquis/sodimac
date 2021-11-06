@@ -7,50 +7,6 @@ import 'package:sodimac/app/ui/pages/receptionrolelist_page/receptionrolelist_pa
 import 'package:sodimac/app/ui/pages/transportoperatorlist_page/transportoperatorlist_page.dart';
 import '../../../controllers/home_controller.dart';
 
-// class HomePage extends GetView<HomeController> {
-//   final _controller = Get.put(HomeController());
-//   final _controller2 = Get.put(AuthenticateController());
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           actions: [
-//             IconButton(
-//                 onPressed: () => _controller2.logout(),
-//                 icon: Icon(Icons.logout))
-//           ],
-//           title: Text('Hola ${controller.dataUser['name']}'),
-//         ),
-//         body: SafeArea(child: rolesContainer()));
-//   }
-
-//   Widget rolesContainer() {
-//     initialize();
-//     return GetBuilder<HomeController>(builder: (_) {
-//       return Obx(() {
-//         print(_.dataUser['type_user']);
-//         switch (_.dataUser['type_user']) {
-//           case 0:
-//             return ReceptionRoleListPage();
-//           case 1:
-//             return PreventionistlistPage();
-//           default:
-//         }
-//         return const Center(
-//           child: CircularProgressIndicator(),
-//         );
-//       });
-//     });
-//   }
-
-//   void initialize() {
-//     // inject authentication controller5
-//     Get.lazyPut(
-//       () => HomeController(),
-//     );
-//   }
-// }
-
 class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
