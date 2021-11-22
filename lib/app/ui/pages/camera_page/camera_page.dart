@@ -130,7 +130,7 @@ class CameraPage extends GetView<CameraController> {
           const SizedBox(
             height: 20,
           ),
-          (controller.pathImage.isEmpty)
+          (controller.pathImage.isNotEmpty)
               ? Center(
                   child: SizedBox(
                     height: 40,
