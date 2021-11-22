@@ -14,12 +14,15 @@ class CameraPage extends GetView<CameraController> {
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.getImage(ImageSource.camera);
-        },
-        child: const Icon(Icons.camera_alt),
-      ),
+      floatingActionButton: Obx(() => (controller.pathImage.length < 2)
+          ? FloatingActionButton(
+              onPressed: () {
+                controller.getImage(ImageSource.camera);
+              },
+              child: const Icon(
+                Icons.camera_alt,
+              ))
+          : Container()),
       body: SafeArea(
         child: Container(
             padding: const EdgeInsets.all(25),
