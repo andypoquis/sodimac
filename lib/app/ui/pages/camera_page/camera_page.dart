@@ -103,11 +103,11 @@ class CameraPage extends GetView<CameraController> {
           const SizedBox(
             height: 10,
           ),
-          DropdownButton(
-            isExpanded: true,
-            items: const [],
-            hint: const Text('Seleccione...'),
-          ),
+          // DropdownButton(
+          //   isExpanded: true,
+          //   items: const [],
+          //   hint: const Text('Seleccione...'),
+          // ),
           const SizedBox(
             height: 30,
           ),

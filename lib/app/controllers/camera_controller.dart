@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class CameraController extends GetxController {
   GetStorage box = GetStorage();
@@ -27,11 +26,9 @@ class CameraController extends GetxController {
         '${dataUser['name']}!, Este incidente no debio ocurrir. Cuentanos. ¿Qué salió mal? y sube una evidencia.';
     super.onInit();
   }
-
+   
   @override
   void onClose() {
-    box.remove('images_carrier');
-
     super.onClose();
   }
 

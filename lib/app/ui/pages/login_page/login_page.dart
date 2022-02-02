@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sodimac/app/controllers/authenticate_controller.dart';
+import 'package:sodimac/app/ui/theme/color.dart';
 import '../../../controllers/login_controller.dart';
 
 // ignore: must_be_immutable
@@ -11,6 +12,7 @@ class LoginPage extends GetView<LoginController> {
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: bgColor01,
       body: SafeArea(
         child: Center(
           child: Container(

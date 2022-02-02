@@ -4,9 +4,8 @@ import 'package:sodimac/app/ui/theme/color.dart';
 
 Widget CardRole(String title, String name, String jr, IconData iconState,
     Color colorState, String state) {
-  return Card(
-      child: Container(
-    height: 100,
+  return Container(
+    height: 110,
     padding: const EdgeInsets.all(5.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ Widget CardRole(String title, String name, String jr, IconData iconState,
           ],
         ),
         const SizedBox(
-          height: 5,
+          height: 10,
         ),
         Text(name),
         const SizedBox(
@@ -56,5 +55,5 @@ Widget CardRole(String title, String name, String jr, IconData iconState,
         Text(jr)
       ],
     ),
-  ));
+  );
 }

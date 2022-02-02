@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sodimac/app/ui/theme/color.dart';
 import 'app/bindings/authenticate_binding.dart';
 import 'app/routes/app_pages.dart';
+import 'app/ui/theme/color.dart';
 
 // main() async {
 //   await GetStorage.init();
@@ -59,7 +59,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     initialRoute: Routes.SPLASH,
     theme: ThemeData(
-      primarySwatch: MaterialColor(0xFFE74C3C, color),
+      primarySwatch: primaryColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: const TextTheme(
         headline1: TextStyle(
