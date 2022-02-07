@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:sodimac/app/ui/theme/color.dart';
-
 import 'card_role_list.dart';
 import 'disable_Scroll_Color.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 Widget headerWidget(controller, _controller, _controller2, _sizeScreen) {
   return Column(
@@ -27,13 +26,13 @@ Widget headerWidget(controller, _controller, _controller2, _sizeScreen) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${_controller.dataUser['name']}',
+                        Text('${_controller.name}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                             )),
-                        Text('${_controller.dataUser['type']}',
+                        Text('${_controller.roleDescription}',
                             style: const TextStyle(
                               color: Colors.white70,
                               fontWeight: FontWeight.w500,
@@ -41,12 +40,30 @@ Widget headerWidget(controller, _controller, _controller2, _sizeScreen) {
                             ))
                       ]),
                   Expanded(child: Container()),
-                  IconButton(
-                      onPressed: () => _controller2.logout(),
-                      icon: const Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ))
+                  SizedBox(
+                    width: 35,
+                    child: Center(
+                      child: IconButton(
+                          onPressed: () => Get.bottomSheet(
+                              Container(child: selectRangeDate(controller)),
+                              backgroundColor: Colors.white),
+                          icon: const Icon(
+                            Icons.filter_alt_outlined,
+                            color: Colors.white,
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 35,
+                    child: Center(
+                      child: IconButton(
+                          onPressed: () => _controller2.logout(),
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          )),
+                    ),
+                  ),
                 ],
               ))),
       // Container(
@@ -317,4 +334,26 @@ Widget spaceH(double spaceH) {
 
 Widget spaceW(double spaceW) {
   return SizedBox(width: spaceW);
+}
+
+Widget selectRangeDate(controller) {
+  return Column(
+    children: [
+      SfDateRangePicker(
+        onSelectionChanged: (DateRangePickerSelectionChangedArgs args) =>
+            controller.onSelectionChanged(args),
+        selectionMode: DateRangePickerSelectionMode.range,
+      ),
+      Obx(() {
+        return Text((controller.range.value ?? 'Seleccionar fecha'));
+      }),
+      spaceH(25),
+      ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            maximumSize: const Size(200, 50), minimumSize: const Size(150, 50)),
+        onPressed: () => controller.fetchReferenceGuides(),
+        child: const Text('Filtrar'),
+      )
+    ],
+  );
 }

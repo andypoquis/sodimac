@@ -11,16 +11,12 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    print('Se está iniciando');
-    await GetStorage.init('type_user');
-
-    roleIndex.value = dataUser['type_user'];
+    roleIndex.value = 0;
     super.onInit();
   }
 
   @override
   void onReady() {
-    print('Estoy listo');
     super.onReady();
   }
 

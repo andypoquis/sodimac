@@ -6,8 +6,6 @@ import '../../../controllers/login_controller.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends GetView<LoginController> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final sizeScreen = MediaQuery.of(context).size;
@@ -72,7 +70,7 @@ class LoginPage extends GetView<LoginController> {
                   color: Colors.primaries.first, fontWeight: FontWeight.bold),
             ),
             TextField(
-              controller: emailController,
+              controller: controller.emailController,
               // decoration: const InputDecoration(icon: Icon(Icons.email)),
             ),
             const SizedBox(
@@ -86,18 +84,28 @@ class LoginPage extends GetView<LoginController> {
             TextField(
               obscureText: true,
               // decoration: const InputDecoration(icon: Icon(Icons.lock)),
-              controller: passwordController,
+              controller: controller.passwordController,
             ),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             GetBuilder<AuthenticateController>(builder: (_) {
               return SizedBox(
                 width: sizeScreen.width,
-                child: ElevatedButton(
-                    onPressed: () => _.authenticate(
-                        emailController.text, passwordController.text),
-                    child: const Text('Iniciar sesión')),
+                child: Obx(() => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        maximumSize: const Size(200, 50),
+                        minimumSize: const Size(150, 50)),
+                    onPressed: (!_.isLoading.value)
+                        ? () => _.fetchReferenceGuides(
+                            controller.passwordController.text,
+                            controller.emailController.text)
+                        : null,
+                    child: (!_.isLoading.value)
+                        ? const Text('Iniciar sesión')
+                        : const CircularProgressIndicator(
+                            color: Color(0xffCACFD2),
+                          ))),
               );
             }),
           ],
