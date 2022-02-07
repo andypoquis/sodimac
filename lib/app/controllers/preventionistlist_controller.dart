@@ -30,7 +30,7 @@ class PreventionistlistController extends GetxController {
   void onInit() {
     fetchReferenceGuides();
     name.value = dataUser['usuario']['nombres'];
-    roleDescription.value = dataUser['roles'][0]['descripcion'];
+    roleDescription.value = dataUser['roles'][0]['nombre'];
     super.onInit();
   }
 
