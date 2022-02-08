@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:sodimac/app/ui/pages/bottomsheetdetail_page/bottomsheetdetail_page.dart';
 import 'package:sodimac/app/ui/theme/color.dart';
 import 'card_role_list.dart';
 import 'disable_Scroll_Color.dart';
@@ -90,8 +91,12 @@ Widget headerWidget(controller, _controller, _controller2, _sizeScreen) {
                 itemCount: controller.referenceGuidesList.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                      onTap: () =>
-                          bottomSheetContainer(_sizeScreen, controller, index),
+                      onTap: () {
+                        controller.postIdDetailGuide(
+                            controller.referenceGuidesList[index].id);
+                        bottomSheetContainer(_sizeScreen, controller,
+                            controller.referenceGuidesList[index].id);
+                      },
                       child: slidableWidget(index, _controller, controller));
                 })),
           ))
@@ -99,145 +104,10 @@ Widget headerWidget(controller, _controller, _controller2, _sizeScreen) {
   );
 }
 
-Future bottomSheetContainer(final _sizeScreen, controller, index) {
+Future bottomSheetContainer(final _sizeScreen, controller, int id) {
+  controller.fetchDetailReferenceGuide(id);
   return Get.bottomSheet(
-    Container(
-      padding: const EdgeInsets.only(top: 25),
-      height: _sizeScreen.height * 0.75,
-      child: ScrollConfiguration(
-        behavior: MyBehavior(),
-        child: SingleChildScrollView(
-          controller: controller.scroll,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              spaceH(30),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'CLIENTE VARIOS',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              spaceH(5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        tagWidget(
-                            const Color(0xffF2F3F4),
-                            controller
-                                .referenceGuidesList.value[index].correlative
-                                .toString(),
-                            Colors.black87,
-                            false),
-                        spaceW(10),
-                        tagWidget(const Color(0xffD6EAF8), 'Emitido',
-                            const Color(0xff3498DB), true, Icons.send),
-                        spaceW(10),
-                        tagWidget(
-                            const Color(0xffD6EAF8),
-                            'Contado',
-                            const Color(0xff3498DB),
-                            true,
-                            Icons.rate_review_outlined),
-                      ],
-                    ),
-                    spaceH(35),
-                    rowIconDescription(
-                        const Color(0xffD6EAF8),
-                        const Color(0xff3498DB),
-                        Icons.store_mall_directory_outlined,
-                        'ALMACÉN',
-                        'Almacen Principal(AP)'),
-                    spaceH(35),
-                    const Text(
-                      'DETALLE DE PRODUCTOS',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Container(
-                    width: 500,
-                    child: DataTable(
-                      columns: const [
-                        DataColumn(label: Text('SKU')),
-                        DataColumn(label: Text('Producto')),
-                        DataColumn(label: Text('Cant')),
-                      ],
-                      rows: const [
-                        DataRow(cells: [
-                          DataCell(Text('B00001')),
-                          DataCell(Text('Producto 01')),
-                          DataCell(Text('5')),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text('B00002')),
-                          DataCell(Text('Producto 02')),
-                          DataCell(Text('2')),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text('B00003')),
-                          DataCell(Text('Producto 03')),
-                          DataCell(Text('46')),
-                        ]),
-                      ],
-                    )),
-              ),
-              spaceH(25),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'HISTORIAL DE PROCESOS',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    spaceH(15),
-                    rowIconDescription(
-                        const Color(0xffFADBD8),
-                        const Color(0xffE74C3C),
-                        Icons.date_range,
-                        'FECHA DE REGISTRO',
-                        '27 DICIEMBRE, 2021 6:28 PM'),
-                    spaceH(25),
-                    rowIconDescription(
-                        const Color(0xffFADBD8),
-                        const Color(0xffE74C3C),
-                        Icons.date_range,
-                        'FECHA DE REGISTRO',
-                        '27 DICIEMBRE, 2021 6:28 PM'),
-                    spaceH(25),
-                    rowIconDescription(
-                        const Color(0xffFADBD8),
-                        const Color(0xffE74C3C),
-                        Icons.date_range,
-                        'FECHA DE REGISTRO',
-                        '27 DICIEMBRE, 2021 6:28 PM'),
-                    spaceH(25),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    ),
+    BottomsheetdetailPage(),
     backgroundColor: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
@@ -246,7 +116,7 @@ Future bottomSheetContainer(final _sizeScreen, controller, index) {
   );
 }
 
-Widget tagWidget(Color color, String title, textColor, bool isIcon,
+Widget tagWidget(Color color, String? title, textColor, bool isIcon,
     [IconData? icon]) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -264,40 +134,9 @@ Widget tagWidget(Color color, String title, textColor, bool isIcon,
               )
             : Container(),
         (isIcon) ? spaceW(10) : Container(),
-        Text(title, style: TextStyle(color: textColor)),
+        Text(title!, style: TextStyle(color: textColor)),
       ],
     ),
-  );
-}
-
-Widget rowIconDescription(Color bgColor, Color colorIcon, IconData icon,
-    String title, String subtitle) {
-  return Row(
-    children: [
-      CircleAvatar(
-        backgroundColor: bgColor,
-        child: Icon(
-          icon,
-          color: colorIcon,
-        ),
-      ),
-      spaceW(10),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          ),
-          spaceH(7),
-          Text(subtitle,
-              style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: subtitleColor)),
-        ],
-      )
-    ],
   );
 }
 
@@ -312,8 +151,8 @@ Widget slidableWidget(int index, _controller, controller) {
               label: 'Editar',
               backgroundColor: Colors.redAccent,
               icon: Icons.edit,
-              onPressed: (context) =>
-                  _controller.naavigatorDetailVaucher(index),
+              onPressed: (context) => _controller.naavigatorDetailVaucher(
+                  controller.referenceGuidesList[index].id),
             ),
           ],
         ),

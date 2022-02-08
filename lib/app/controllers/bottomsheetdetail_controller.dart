@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:sodimac/app/data/models/detailReferenceGuide.dart';
 import 'package:sodimac/app/data/services/remote_services.dart';
-import 'package:sodimac/app/routes/app_pages.dart';
 
-import 'camera_controller.dart';
-
-class VaucherDetailController extends GetxController {
-  final _controller2 = Get.put(CameraController());
-  GetStorage box = GetStorage();
-  RxInt roleIndex = 0.obs;
-  RxInt countNavigator = 0.obs;
-  RxBool buttonRoleEnabled = true.obs;
-  RxString stateRoleText = 'Pendiente de recepción'.obs;
-  RxBool isSuccessFulDelivery = false.obs;
+class BottomsheetdetailController extends GetxController {
   RxBool isLoading = false.obs;
-  get dataUser => box.read("data_user");
-  RxList<DataRow> dataRows = RxList<DataRow>();
-  RxInt lengthDataProduct = 0.obs;
-  @override
-  void onInit() async {
-    roleIndex.value = 0;
-    if (0 == 2) {
-      buttonRoleEnabled.value = false;
-    }
+  RxInt id = (0).obs;
 
-    //print(roleIndex);
-    super.onInit();
-  }
+  RxString idItem = "".obs;
+  RxString line = "".obs;
+  RxString productId = "".obs;
+  RxString sku = "".obs;
+  RxString productName = "".obs;
+  RxString productFamily = "".obs;
+  RxString unitMeasureId = "".obs;
+  RxString unitMeasure = "".obs;
+  RxString unitMeasureCode = "".obs;
+  RxString quantity = "".obs;
+  RxString ostId = "".obs;
+  RxString ostNumber = "".obs;
+
+  RxInt lengthDataProduct = 0.obs;
+
+  RxList<DataRow> dataRows = RxList<DataRow>();
+
+  // @override
+  // void onInit() {
+  //   fetchDetailReferenceGuide(id.value);
+  //   super.onInit();
+  // }
 
   var detailReferenceGuideList = DetailReferenceGuide().obs;
   void fetchDetailReferenceGuide(int id) async {
@@ -48,7 +48,38 @@ class VaucherDetailController extends GetxController {
       isLoading(false);
       lengthDataProduct.value =
           detailReferenceGuideList.value.referralGuide!.items!.length;
+      detailReferenceGuideList.value.referralGuide?.registeredAt;
       getDataRows();
+    }
+  }
+
+  getDataProduct(i) {
+    if (isLoading(false)) {
+      idItem.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].id}';
+      line.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].line}';
+      productId.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].productId}';
+      sku.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].sku}';
+      productName.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].productName}';
+      productFamily.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].productFamily}';
+      unitMeasureId.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].unitMeasureId}';
+      unitMeasure.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].unitMeasure}';
+      unitMeasureCode.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].unitMeasureCode}';
+      quantity.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].quantity}';
+      ostId.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].ostId}';
+
+      ostNumber.value =
+          '${detailReferenceGuideList.value.referralGuide!.items![i].ostNumber}';
     }
   }
 
@@ -56,6 +87,7 @@ class VaucherDetailController extends GetxController {
     int lengthData = lengthDataProduct.value;
 
     for (int i = 0; i < lengthData; i++) {
+      getDataProduct(i);
       dataRows.add(DataRow(cells: [
         DataCell(Text(detailReferenceGuideList.value.referralGuide!.items![i].id
             .toString())),
@@ -93,26 +125,5 @@ class VaucherDetailController extends GetxController {
     }
 
     return dataRows;
-  }
-
-  navigatorCameraSuccess() {
-    _controller2.deleteDataPaths();
-    countNavigator++;
-    Get.back();
-    Get.toNamed(Routes.CAMERA);
-    isSuccessFulDelivery.value = true;
-  }
-
-  navigatorCameraRefused() {
-    _controller2.deleteDataPaths();
-    countNavigator++;
-    Get.back();
-    Get.toNamed(Routes.CAMERA);
-    isSuccessFulDelivery.value = false;
-  }
-
-  disableButton() {
-    buttonRoleEnabled.value = false;
-    stateRoleText.value = 'Recepción aprobada';
   }
 }

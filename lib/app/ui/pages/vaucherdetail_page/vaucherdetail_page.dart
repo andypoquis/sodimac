@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sodimac/app/controllers/camera_controller.dart';
+import 'package:sodimac/app/ui/pages/bottomsheetdetail_page/bottomsheetdetail_page.dart';
 import 'package:sodimac/app/ui/pages/carriervalidatewidget_page/carriervalidatewidget_page.dart';
 import '../../../controllers/vaucherdetail_controller.dart';
 
@@ -141,54 +142,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
   }
 
   Widget tableWidget() {
-    return Expanded(
-      flex: 4,
-      child: Column(
-        children: [
-          Container(
-            height: 35,
-            padding: const EdgeInsets.all(8.0),
-            color: const Color(0xffE5E5E5),
-            child: Row(
-              //HEAD
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Expanded(flex: 2, child: Text('SKU')),
-                Expanded(flex: 4, child: Text('Producto')),
-                Expanded(flex: 1, child: Text('Cant.')),
-              ],
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.all(8.0),
-                    color: Colors.white,
-                    height: 50.0,
-                    child: Column(
-                      children: [
-                        Row(
-                          //HEAD
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Expanded(flex: 2, child: Text('B00001')),
-                            Expanded(flex: 4, child: Text('Producto 001')),
-                            Expanded(flex: 1, child: Text('5')),
-                          ],
-                        ),
-                        const Divider()
-                      ],
-                    ),
-                  );
-                }),
-          )
-        ],
-      ),
-    );
+    return Expanded(flex: 4, child: dataTableProduct());
   }
 
   Widget roleButton(final sizeScreen, BuildContext context) {
@@ -215,8 +169,7 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
         case 0:
           return descriptionWidget('Estado', 'Aprobado por SUNAT');
         case 1:
-          return descriptionWidget(
-              'Estado', '${_controller.stateRoleText.value}');
+          return descriptionWidget('Estado', _controller.stateRoleText.value);
         case 2:
           return Container();
         case 3:
@@ -332,6 +285,25 @@ class VaucherDetailPage extends GetView<VaucherDetailController> {
             content: const Text('Aprobación realizada con éxito'),
           );
         });
+  }
+
+  Widget dataTableProduct() {
+    return Obx(() {
+      return DataTable(columns: const [
+        DataColumn(label: Text('id')),
+        DataColumn(label: Text('line')),
+        DataColumn(label: Text('productId')),
+        DataColumn(label: Text('SKU')),
+        DataColumn(label: Text('productName')),
+        DataColumn(label: Text('productFamily')),
+        DataColumn(label: Text('unitMeasureId')),
+        DataColumn(label: Text('unitMeasure')),
+        DataColumn(label: Text('unitMeasureCode')),
+        DataColumn(label: Text('quantity')),
+        DataColumn(label: Text('ostId')),
+        DataColumn(label: Text('ostNumber')),
+      ], rows: controller.dataRows);
+    });
   }
 
   // Widget rowWidget(){

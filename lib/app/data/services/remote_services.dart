@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sodimac/app/data/models/authenticate.dart';
 import 'package:sodimac/app/data/models/detailAuthenticate.dart';
+import 'package:sodimac/app/data/models/detailReferenceGuide.dart';
 import 'package:sodimac/app/data/models/referenceGuides.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -94,8 +95,7 @@ class RemoteServices {
     }
   }
 
-  static Future<DetailAuthenticate?> fetchDetailReferenceGuide(
-      String id) async {
+  static Future<DetailReferenceGuide?> fetchDetailReferenceGuide(int id) async {
     Map<String, String> requestHeaders = {
       "Content-Type": "application/json; charset=utf-8"
     };
@@ -108,16 +108,8 @@ class RemoteServices {
 
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      return detailAuthenticateFromJson(jsonString);
+      return detailReferenceGuideFromJson(jsonString);
     } else {
-      Fluttertoast.showToast(
-          msg: "A ocurrido un error",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
       return null;
     }
   }

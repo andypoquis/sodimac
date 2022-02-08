@@ -97,7 +97,7 @@ class LoginPage extends GetView<LoginController> {
                         maximumSize: const Size(200, 50),
                         minimumSize: const Size(150, 50)),
                     onPressed: (!_.isLoading.value)
-                        ? () => _.fetchReferenceGuides(
+                        ? () => _.fetchAuthentication(
                             controller.passwordController.text,
                             controller.emailController.text)
                         : null,
